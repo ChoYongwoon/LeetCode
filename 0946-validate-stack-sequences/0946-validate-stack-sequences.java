@@ -1,31 +1,31 @@
 class Solution {
-    public boolean validateStackSequences(int[] pushed, int[] popped) { // after last element of pushed, elements in popped need to be sorted reverse order in pushed.
+    public boolean validateStackSequences(int[] pushed, int[] popped) { // Use stack to check
         Stack<Integer> stack = new Stack<>();
-        int pushed_idx = 0; int popped_idx = 0;
-        while(pushed_idx < pushed.length){
-            if(pushed[pushed_idx] == popped[popped_idx]){
+        int pushed_idx = 0; int popped_idx = 0;                         
+        while(pushed_idx < pushed.length){                      
+            if(pushed[pushed_idx] == popped[popped_idx]){               // the comparing value is smae, execute push() and pop() which is same with both index ++
                 pushed_idx++;
                 popped_idx++;
-                continue;
+                continue;                                               // then, jump to next comparison
             }
-            if(!stack.isEmpty() && stack.peek() == popped[popped_idx]){
+            if(!stack.isEmpty() && stack.peek() == popped[popped_idx]){ // if the top of stack is smae with target value in popped, execute pop(), popped_idx++
                 stack.pop();
                 popped_idx++;
             }
-            else{
+            else{                                                       // to all other cases, push the current target value to stack
                 stack.push(pushed[pushed_idx]);
                 pushed_idx++;
             }
             
         }
         int tmp = 0;
-        while(!stack.isEmpty()){
-            tmp = stack.pop();
+        while(!stack.isEmpty()){                                        // after above sequence, check the value after popped_idx is sorted as reverse order of pushed
+            tmp = stack.pop();                                          
             if(tmp != popped[popped_idx]){
-                return false;
+                return false;                                           // if not, false
             }
             popped_idx++;
         }
-        return true;
+        return true;                                                    // all test finish -> true
     }
 }
