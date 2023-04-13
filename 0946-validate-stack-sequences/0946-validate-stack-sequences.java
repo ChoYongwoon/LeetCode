@@ -18,10 +18,8 @@ class Solution {
             }
             
         }
-        int tmp = 0;
-        while(!stack.isEmpty()){                                        // after above sequence, check the value after popped_idx is sorted as reverse order of pushed
-            tmp = stack.pop();                                          
-            if(tmp != popped[popped_idx]){
+        while(!stack.isEmpty()){                                        // after above sequence, check the value after popped_idx is sorted as reverse order of pushe               
+            if(stack.pop() != popped[popped_idx]){
                 return false;                                           // if not, false
             }
             popped_idx++;
