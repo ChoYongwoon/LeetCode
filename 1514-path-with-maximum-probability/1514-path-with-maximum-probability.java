@@ -1,10 +1,11 @@
 class Solution {
-    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
-        Map<Integer, Set<Pair>> graph = buildGraph(n, edges, succProb);
-        return dijkstra(n, start, end, graph);
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) { 
+        Map<Integer, Set<Pair>> graph = buildGraph(n, edges, succProb);     // Build Graph
+        return dijkstra(n, start, end, graph);                              // Dijkstra to compute the maximum probability
     }
 
-    public Map<Integer, Set<Pair>> buildGraph(int n, int[][] edges, double[] succProb){
+    public Map<Integer, Set<Pair>> buildGraph(int n, int[][] edges, double[] succProb){ // Build graph (adjacent HashTable)
+        // This process is for making easier to get adjacent vertices
         Map<Integer, Set<Pair>> graph = new HashMap<>();
         for(int i = 0; i < edges.length; i++){
             int[] edge = edges[i];
@@ -26,9 +27,9 @@ class Solution {
         return graph;
     }
 
-    public double dijkstra(int n, int start, int end, Map<Integer, Set<Pair>> graph) {
-        PriorityQueue<Pair> pq = new PriorityQueue<>((Pair p1, Pair p2) -> p1.dist < p2.dist ? 1: -1);
-        Pair[] vertices = new Pair[n];
+    public double dijkstra(int n, int start, int end, Map<Integer, Set<Pair>> graph) {  // Calculate Maximum probability
+        PriorityQueue<Pair> pq = new PriorityQueue<>((Pair p1, Pair p2) -> p1.dist < p2.dist ? 1: -1);  // maximum probability vertex is located in first space
+        Pair[] vertices = new Pair[n];  // vertices used in dijkstra algorithm
         for(int i = 0; i < n; i++){
             vertices[i] = new Pair(i, 0);
             vertices[i].dist = -1;
@@ -42,8 +43,8 @@ class Solution {
                 return curr.dist;
             }
             Set<Pair> adjs = graph.get(curr.vertex);
-            if(adjs == null){
-                return 0;
+            if(adjs == null){  
+                continue;
             }
             for(Pair adj : adjs){
                 int adjVertex = adj.vertex;
@@ -57,7 +58,7 @@ class Solution {
         return 0;
     }
 
-    class Pair{
+    class Pair{ // custom inner class to manage vertices
         int vertex;
         double prob;
         double dist;
